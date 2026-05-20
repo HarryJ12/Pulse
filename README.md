@@ -1,6 +1,6 @@
 # Pulse
 
-Pulse is an async communications platform for the Cursor Cohort and other AI-native builder communities.
+Pulse is an async communications platform built from the Cursor Cohort for Cursor Summer Cohort 1.
 
 Tagline: **Turn conversations into execution.**
 
