@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+
+  --background: #07080a;
+  --surface: #0d0f12;
+  --surface-raised: #12151a;
+  --surface-muted: #171b21;
+  --foreground: #f5f7fa;
+  --text-primary: #f5f7fa;
+  --text-secondary: #aab2bf;
+  --text-muted: #77808d;
+  --border: #242a33;
+  --border-strong: #333b47;
+  --accent: #10c281;
+  --accent-strong: #12c886;
+  --accent-muted: rgba(16, 194, 129, 0.12);
+  --success: #8fd694;
+  --warning: #f6c66b;
+  --danger: #ff8f9a;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-body: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+  border-color: var(--border);
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.55;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--text-primary);
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(16, 194, 129, 0.24);
+  color: var(--text-primary);
+}
+
+input,
+textarea {
+  caret-color: var(--accent);
+}
+
+.prose-pulse {
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.prose-pulse h1,
+.prose-pulse h2,
+.prose-pulse h3 {
+  color: var(--text-primary);
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-pulse ul,
+.prose-pulse ol {
+  margin: 0.75rem 0;
+  padding-left: 1.25rem;
+}
+
+.prose-pulse li + li {
+  margin-top: 0.25rem;
+}
+
+.prose-pulse a {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pulse-focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.pulse-focus:focus-visible {
+  outline-color: var(--accent);
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-muted);
+}
+
+.skeleton::after {
+  animation: pulse-skeleton 1.4s var(--ease-standard) infinite;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+  content: "";
+  inset: 0;
+  position: absolute;
+  transform: translateX(-100%);
+}
+
+@keyframes pulse-skeleton {
+  100% {
+    transform: translateX(100%);
+  }
+}
