@@ -1,8 +1,6 @@
 # Pulse
 
-Pulse is an async communications platform built from the Cursor Cohort for Cursor Summer Cohort 1.
-
-Tagline: **Turn conversations into execution.**
+Pulse is an async communications platform built from the Cursor Cohort for Summer Cursor Cohort made to **turn conversations into execution.**
 
 It helps a technical cohort build whatever members are working on by keeping project context, help requests, feedback, decisions, links, and next steps in one structured workspace instead of scattering them across chat tabs.
 
