@@ -1,10 +1,12 @@
 # Pulse
 
-Pulse is an async communications platform for AI-native builders.
+Pulse is an async communications platform for the Cursor Cohort and other AI-native builder communities.
 
 Tagline: **Turn conversations into execution.**
 
-It is designed for a 100-person technical cohort that needs structured threads, project rooms, searchable context, lightweight chat with durable references, and manual AI artifacts without becoming a realtime chat clone.
+It helps a technical cohort build whatever members are working on by keeping project context, help requests, feedback, decisions, links, and next steps in one structured workspace instead of scattering them across chat tabs.
+
+The product starts with the essentials: threads, project rooms, lightweight chat, durable references, and manual AI artifacts. The plan is to evolve it from real cohort usage: improve the workflows that help builders ship, keep AI generation intentional and low-cost, and avoid turning Pulse into a noisy realtime chat clone.
 
 ## Features
 
@@ -75,6 +77,8 @@ with placeholder Supabase values. Add real values to `.env.local` and restart
 `npm run dev`.
 
 ## Environment Variables
+
+These variables are for the person deploying and operating Pulse, not for every cohort member. In the intended Cursor Cohort deployment, the moderator/admin owns the Supabase, OpenAI, GitHub OAuth, and Vercel configuration; members simply sign in with GitHub and use the app.
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=
