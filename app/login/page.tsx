@@ -28,10 +28,6 @@ export default function LoginPage() {
           <GithubLoginButton />
         </div>
 
-        <p className="mt-6 text-xs leading-5 text-[var(--text-muted)]">
-          Pulse uses Supabase Auth. API keys and OAuth secrets must stay in
-          environment variables, not source code.
-        </p>
       </section>
     </main>
   );
