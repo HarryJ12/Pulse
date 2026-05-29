@@ -1,8 +1,15 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import {
+  cohortAccessCookieName,
+  getCohortAccessPassword,
+  getCohortAccessToken,
+  safeNextPath,
+} from "@/lib/access";
 import {
   generateThreadPromptMarkdown,
   generateThreadSummaryMarkdown,
@@ -32,6 +39,12 @@ function optionalUrl(formData: FormData, key: string) {
   return value;
 }
 
+function redirectToLoginWithAccessStatus(status: string, next: string) {
+  const params = new URLSearchParams({ access: status });
+  if (next !== "/") params.set("next", next);
+  redirect(`/login?${params.toString()}`);
+}
+
 function parseThreadType(value: string): ThreadType {
   const allowed = THREAD_TYPES.map((item) => item.value);
   if (!allowed.includes(value as ThreadType)) {
@@ -52,6 +65,33 @@ export async function signOutAction() {
   const { supabase } = await requireUser();
   await supabase.auth.signOut();
   redirect("/login");
+}
+
+export async function unlockCohortAccessAction(formData: FormData) {
+  const next = safeNextPath(nonEmpty(formData.get("next")) ?? "/");
+  const submittedPassword = nonEmpty(formData.get("access_password"));
+  const configuredPassword = getCohortAccessPassword();
+
+  if (!configuredPassword) {
+    redirectToLoginWithAccessStatus("not_configured", next);
+  }
+
+  if (!submittedPassword || submittedPassword !== configuredPassword) {
+    redirectToLoginWithAccessStatus("invalid", next);
+  }
+
+  const cookieStore = await cookies();
+  cookieStore.set(cohortAccessCookieName, await getCohortAccessToken(), {
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 30,
+    path: "/",
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  const params = new URLSearchParams();
+  if (next !== "/") params.set("next", next);
+  redirect(`/login${params.size ? `?${params.toString()}` : ""}`);
 }
 
 export async function createThreadAction(formData: FormData) {

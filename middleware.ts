@@ -2,6 +2,11 @@ import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
 import {
+  cohortAccessCookieName,
+  getCohortAccessToken,
+  isCohortAccessEnabled,
+} from "@/lib/access";
+import {
   getPublicSupabaseAnonKey,
   getPublicSupabaseUrl,
   isSupabasePublicConfigReady,
@@ -14,6 +19,18 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
   const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/auth");
+  const accessGateEnabled = isCohortAccessEnabled();
+  const hasCohortAccess =
+    !accessGateEnabled ||
+    request.cookies.get(cohortAccessCookieName)?.value ===
+      (await getCohortAccessToken());
+
+  if (!hasCohortAccess && pathname !== "/login") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.searchParams.set("next", pathname);
+    return NextResponse.redirect(url);
+  }
 
   if (!isSupabasePublicConfigReady()) {
     if (isAuthRoute) return response;
@@ -58,7 +75,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (user && pathname === "/login") {
+  if (user && pathname === "/login" && hasCohortAccess) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
     return NextResponse.redirect(url);

@@ -85,6 +85,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 OPENAI_API_KEY=
 OPENAI_MODEL=gpt-4o-mini
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
+PULSE_ACCESS_PASSWORD=
 GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
 ```
@@ -92,6 +93,8 @@ GITHUB_CLIENT_SECRET=
 `SUPABASE_SERVICE_ROLE_KEY` is listed for operational setup if needed, but the app does not expose it to the browser.
 
 Do not put a value that starts with `sb_publishable_` in `NEXT_PUBLIC_SUPABASE_URL`; that value is a key, not a URL.
+
+Set `PULSE_ACCESS_PASSWORD` to require a shared cohort password before GitHub sign-in. Share that password with cohort members in Discord, not in source code.
 
 ## Supabase Setup
 
